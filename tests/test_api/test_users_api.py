@@ -116,3 +116,37 @@ async def test_delete_user_does_not_exist(async_client, token):
     delete_response = await async_client.delete(f"/users/{non_existent_user_id}", headers=headers)
     assert delete_response.status_code == 404
 
+# Test case for updating user with invalid data
+@pytest.mark.asyncio
+async def test_update_user_invalid_data(async_client, user, token):
+    invalid_data = {"email": "invalid_email"}  # Invalid email format
+    headers = {"Authorization": f"Bearer {token}"}
+    response = await async_client.put(f"/users/{user.id}", json=invalid_data, headers=headers)
+    assert response.status_code == 422
+
+# Test case for retrieving a non-existent user
+@pytest.mark.asyncio
+async def test_retrieve_non_existent_user(async_client, token):
+    non_existent_user_id = "00000000-0000-0000-0000-000000000001"  # Valid UUID format but non-existent
+    headers = {"Authorization": f"Bearer {token}"}
+    response = await async_client.get(f"/users/{non_existent_user_id}", headers=headers)
+    assert response.status_code == 404
+
+# Test case for attempting to delete a user without authentication
+@pytest.mark.asyncio
+async def test_delete_user_unauthorized(async_client, user):
+    delete_response = await async_client.delete(f"/users/{user.id}")
+    assert delete_response.status_code == 401
+
+# Test case for attempting to create a user with missing data
+@pytest.mark.asyncio
+async def test_create_user_missing_data(async_client):
+    missing_data = {"username": "testuser"}  # Missing email and password
+    response = await async_client.post("/register/", json=missing_data)
+    assert response.status_code == 422
+
+# Test case for logging in with missing credentials
+@pytest.mark.asyncio
+async def test_login_missing_credentials(async_client):
+    response = await async_client.post("/login/", json={})
+    assert response.status_code == 422
