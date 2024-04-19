@@ -115,4 +115,4 @@ async def test_email_verification(db_session: AsyncSession, user: User):
     user.verify_email()
     await db_session.commit()
     await db_session.refresh(user)
-    assert user.email_verified, "Email should be verified after calling verify_email()"
+    assert user.email_verified,"Email should be verified after calling verify_email()"
