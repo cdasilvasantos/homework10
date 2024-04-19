@@ -1,30 +1,37 @@
+# test_token_schema.py
+
 import pytest
-from pydantic import ValidationError
 from app.schemas.token_schemas import Token, TokenData, RefreshTokenRequest
 
-# Test Token model
+# Test cases for Token model
 def test_token_model():
     access_token = "jhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-    token = Token(access_token=access_token)
+    token_type = "bearer"
+    token = Token(access_token=access_token, token_type=token_type)
     assert token.access_token == access_token
-    assert token.token_type == "bearer"  # Default value check
+    assert token.token_type == token_type
 
-    # Validate JSON schema
-    assert token.schema()["properties"]["access_token"]["type"] == "string"
-    assert token.schema()["properties"]["token_type"]["type"] == "string"
+def test_token_model_default_token_type():
+    access_token = "jhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    token = Token(access_token=access_token)
+    assert token.token_type == "bearer"
 
-# Test TokenData model
+# Test cases for TokenData model
 def test_token_data_model():
+    username = "user@example.com"
+    token_data = TokenData(username=username)
+    assert token_data.username == username
+
+def test_token_data_model_optional_username():
     token_data = TokenData()
+    assert token_data.username is None
 
-    # Validate JSON schema
-    assert token_data.schema() is not None
-
-# Test RefreshTokenRequest model
+# Test cases for RefreshTokenRequest model
 def test_refresh_token_request_model():
     refresh_token = "jhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-    refresh_request = RefreshTokenRequest(refresh_token=refresh_token)
-    assert refresh_request.refresh_token == refresh_token
+    request = RefreshTokenRequest(refresh_token=refresh_token)
+    assert request.refresh_token == refresh_token
 
-    # Validate JSON schema
-    assert refresh_request.schema()["properties"]["refresh_token"]["type"] == "string"
+# Run tests
+if __name__ == "__main__":
+    pytest.main()
