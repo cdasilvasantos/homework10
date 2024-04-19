@@ -11,6 +11,7 @@ Reflecting on the assignment, I'm amazed at the extent of my growth and the brea
 - [Issue 3: HTTP Code](https://github.com/cdasilvasantos/homework10/issues/5)
 - [Issue 4: RefreshTokenRequest Missing Token](https://github.com/cdasilvasantos/homework10/issues/8)
 - [Issue 5: Incorrect HTTP Code](https://github.com/cdasilvasantos/homework10/issues/10)
+- [Issue 6: Test Coverage](https://github.com/cdasilvasantos/homework10/issues/12)
 
 ### Github Actions
 [![CI/CD Pipeline](https://github.com/cdasilvasantos/homework10/actions/workflows/production.yml/badge.svg)](https://github.com/cdasilvasantos/homework10/actions/workflows/production.yml)
