@@ -14,7 +14,6 @@ def test_token_model():
     assert token.schema()["properties"]["token_type"]["type"] == "string"
 
 # Test TokenData model
-# Test TokenData model
 def test_token_data_model():
     token_data = TokenData()
 
